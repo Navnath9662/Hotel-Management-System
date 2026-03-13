@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swarajya - Register</title>
+    <style>
+        :root {
+            --primary-color: #00bcd4;
+            --secondary-color: #3f51b5;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        body { 
+            background: linear-gradient(45deg, #1a237e, #01579b); 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-family: sans-serif; 
+            margin: 0; 
+        }
+
+        .register-container { 
+            background: rgba(255,255,255,0.1); 
+            padding: 40px; 
+            border-radius: 20px; 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            width: 320px; 
+            text-align: center; 
+            color: white; 
+        }
+
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            border: none; 
+            background: rgba(255,255,255,0.2); 
+            color: white; /* टाइप केलेले अक्षर पांढरे दिसेल */
+            box-sizing: border-box; 
+            outline: none;
+        }
+
+        /* --- Placeholder पांढरा करण्यासाठी खालील कोड जोडला आहे --- */
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.8); /* पांढरा रंग थोड्या पारदर्शकतेसह */
+            opacity: 1; /* Firefox साठी आवश्यक */
+        }
+
+        /* इंटरनेट एक्सप्लोरर आणि सफारीसाठी */
+        input::-webkit-input-placeholder { color: white; }
+        input::-ms-input-placeholder { color: white; }
+
+        .reg-btn { 
+            width: 100%; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 8px; 
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); 
+            color: white; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px;
+        }
+
+        #msg { color: #ffeb3b; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="background-circles" id="circles"></div> <div class="register-container">
+        <h2>नवीन नोंदणी</h2>
+        <form id="regForm">
+            <input type="text" id="regUser" placeholder="User Name" required>
+            <input type="password" id="regPass" placeholder="Password" required>
+            <input type="password" id="confirmPass" placeholder="Confirm Password" required>
+            <button type="submit" class="reg-btn">REGISTER</button>
+            <p id="msg"></p>
+        </form>
+        <p><a href="index.html" style="color: #00bcd4; text-decoration: none; font-size: 14px;">आधीच अकाउंट आहे? लॉगिन करा</a></p>
+    </div>
+
+    <script>
+        document.getElementById('regForm').onsubmit = function(e) {
+            e.preventDefault();
+            const user = document.getElementById('regUser').value;
+            const pass = document.getElementById('regPass').value;
+            const confirm = document.getElementById('confirmPass').value;
+
+            if(pass !== confirm) {
+                alert("पासवर्ड जुळत नाहीत!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('username', user);
+            formData.append('password', pass);
+
+            fetch('register.php', { method: 'POST', body: formData })
+            .then(res => res.text())
+            .then(data => {
+                if(data.trim() === "Success") {
+                    alert("नोंदणी यशस्वी! आता लॉगिन करा.");
+                    window.location.href = "index.html";
+                } else {
+                    document.getElementById('msg').textContent = data;
+                }
+            });
+        };
+    </script>
+</body>
+</html>

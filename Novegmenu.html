@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>स्वराज्य Non-Veg Maharashtrian Restaurant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #fff8f0;
+      --card: #fff;
+      --muted: #7c5e3c;
+      --text: #2d1a05;
+      --accent: #ff6f3c;
+      --accent-2: #ffb20f;
+      --chip: #ffe5b4;
+      --border: #ffb20f;
+      --danger: #e63946;
+      --success: #43aa8b;
+      --review-bg: #fff3e0;
+      --review-star: #ffb20f;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(135deg, #fff8f0 0%, #ffe5b4 100%);
+      color: var(--text);
+    }
+    header {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      padding: 24px 0 16px 0;
+      text-align: center;
+      box-shadow: 0 4px 18px rgba(255, 111, 60, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 40%, #ffb20f 60%, #ff6f3c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 2px 8px #ffb20f44;
+    }
+    nav {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.18);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 16px;
+    }
+    .section {
+      margin-bottom: 48px;
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: 0 4px 18px #ffb20f11;
+      padding: 32px 24px;
+      border: 2px solid var(--border);
+    }
+    .section h2 {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+    }
+    .menu-item {
+      background: linear-gradient(120deg, #fffbe6 60%, #ffe5b4 100%);
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 8px #ffb20f22;
+      padding: 18px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      transition: transform 0.12s;
+      min-height: 340px;
+    }
+    .menu-item:hover {
+      transform: scale(1.025);
+      box-shadow: 0 6px 24px #ffb20f33;
+    }
+    .item-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ffb20f44;
+      background: #fffbe6;
+      box-shadow: 0 1px 4px #ffb20f22;
+    }
+    .item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .item-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    .item-price {
+      font-weight: 700;
+      color: var(--accent-2);
+      font-size: 1.1rem;
+    }
+    .item-desc {
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .tag {
+      background: var(--chip);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+    .order-now-btn {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.18s, box-shadow 0.18s;
+      box-shadow: 0 2px 8px #ffb20f22;
+    }
+    .order-now-btn:hover {
+      background: linear-gradient(90deg, #ffb20f, #ff6f3c);
+      box-shadow: 0 4px 16px #ffb20f33;
+    }
+    /* Payment Modal */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 178, 15, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.2s;
+    }
+#reviews {
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+    padding: 20px;
+}
+
+/* टेबलचे आकर्षक डिझाइन */
+.reviews-table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 40px;
+    /* ॲनिमेशन (Keyframe खाली दिले आहे) */
+    animation: slideUp 1s ease-out; 
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+th {
+    background: linear-gradient(135deg, #e65100, #ff9800);
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+tr:hover {
+    background-color: #fff9f0;
+}
+
+/* रिव्ह्यू फॉर्मचे डिझाइन */
+#reviews form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto; /* फॉर्म सेंटरला ठेवण्यासाठी */
+}
+
+#reviews input, #reviews select, #reviews textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box; /* पॅडिंगमुळे साईज बदलू नये म्हणून */
+}
+
+#reviews button {
+    background: #e65100;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#reviews button:hover {
+    background: #ff9800;
+    transform: scale(1.02);
+}
+
+  /* BUTTON CSS */
+        .add-btn {
+            background: linear-gradient(45deg, #e65100, #ff9800);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: bold;
+        }
+        .success-green {
+            background: #2ecc71 !important;
+            background-image: none !important;
+            transform: scale(1.05);
+        }
+
+/* @keyframes - हे CSS मध्ये कुठेही (स्वतंत्रपणे) लिहा */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .modal-box {
+      background: #fffbe6;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #ffb20f33;
+      padding: 32px 28px 24px 28px;
+      max-width: 95vw;
+      width: 340px;
+      text-align: center;
+      position: relative;
+      border: 2px solid var(--border);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+    .modal-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+    .modal-item {
+      color: var(--accent-2);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .modal-pay {
+      margin-bottom: 12px;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    .modal-qr {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 10px auto;
+      display: block;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #ffb20f22;
+    }
+    .modal-done-btn {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 18px;
+      transition: background 0.18s;
+    }
+    .modal-done-btn:hover {
+      background: linear-gradient(90deg, #ffb20f, #ff6f3c);
+    }
+   
+    
+    /* About Us */
+    .about-us {
+      background: linear-gradient(120deg, #fffbe6 60%, #ffe5b4 100%);
+      border-radius: 18px;
+      border: 2px solid var(--border);
+      box-shadow: 0 4px 18px #ffb20f11;
+      padding: 32px 24px;
+      margin-bottom: 48px;
+      color: var(--text);
+    }
+    .about-us h2 {
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .about-us p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    @media (max-width: 700px) {
+      .section, .about-us { padding: 18px 6px; }
+      .container { padding: 18px 4px; }
+      .brand { font-size: 1.3rem; }
+      .item-img { height: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="brand-icon">🍗</span>
+     स्वराज्य Non-Veg Maharashtrian Delights
+    </div>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#about">About Us</a>
+      <a href="main.php">Home</a>
+             <a href="vegmenu.html"> Veg</a>
+    </nav>
+  </header>
+ <div class="container">
+    <section class="section" id="menu">
+      <h2>Our Nonveg Menu <span>🍖</span></h2>
+      <ul class="menu-list">
+        
+        <li class="menu-item">
+          <img class="item-img" src="https://i.ytimg.com/vi/UYDc6AgK0xo/maxresdefault.jpg" alt="Chicken Kolhapuri">
+          <div class="item-header">
+            <span class="item-name">Chicken Kolhapuri</span>
+            <span class="item-price">₹320</span>
+          </div>
+          <div class="item-desc">Fiery chicken curry with Kolhapuri masala, best enjoyed with bhakri.</div>
+          <div class="tags">
+            <span class="tag">Spicy</span>
+            <span class="tag">Signature</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Chicken Kolhapuri', 320, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://tastyjevan.com/wp-content/uploads/2021/02/thumbnail_nt2-2.jpg" alt="Chicken Sukka">
+          <div class="item-header">
+            <span class="item-name">Chicken Sukka</span>
+            <span class="item-price">₹300</span>
+          </div>
+          <div class="item-desc">Dry chicken preparation with coconut and spices, a Malvani classic.</div>
+          <div class="tags">
+            <span class="tag">Malvani</span>
+            <span class="tag">Dry</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Chicken Sukka', 300, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://theyummydelights.com/wp-content/uploads/2020/07/kolhapuri-chicken-curry-9.jpg" alt="Chicken Rassa">
+          <div class="item-header">
+            <span class="item-name">Chicken Rassa</span>
+            <span class="item-price">₹290</span>
+          </div>
+          <div class="item-desc">Traditional Maharashtrian chicken curry with a rich, spicy gravy.</div>
+          <div class="tags">
+            <span class="tag">Curry</span>
+            <span class="tag">Spicy</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Chicken Rassa', 290, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://i.ytimg.com/vi/_kkosy25Yuc/maxresdefault.jpg" alt="Chicken Handi">
+          <div class="item-header">
+            <span class="item-name">Chicken Handi</span>
+            <span class="item-price">₹340</span>
+          </div>
+          <div class="item-desc">Chicken cooked in a handi with aromatic spices and creamy gravy.</div>
+          <div class="tags">
+            <span class="tag">Handi</span>
+            <span class="tag">Creamy</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Chicken Handi', 340, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://media-cdn.tripadvisor.com/media/photo-s/16/f9/97/b9/mutton-thali-with-jowari.jpg" alt="Mutton Bhakri">
+          <div class="item-header">
+            <span class="item-name">Mutton Bhakri</span>
+            <span class="item-price">₹420</span>
+          </div>
+          <div class="item-desc">Tender mutton cooked in spicy gravy, served with jowar bhakri.</div>
+          <div class="tags">
+            <span class="tag">Special</span>
+            <span class="tag">Spicy</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Mutton Bhakri', 420, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://thumbs.dreamstime.com/b/delicious-crispy-king-fish-fry-also-known-as-indian-surmai-served-onion-lemon-placed-over-rustic-wooden-background-223917903.jpg" alt="Surmai Fry">
+          <div class="item-header">
+            <span class="item-name">Surmai Fry</span>
+            <span class="item-price">₹350</span>
+          </div>
+          <div class="item-desc">Kingfish marinated in Malvani spices, shallow fried to perfection.</div>
+          <div class="tags">
+            <span class="tag">Seafood</span>
+            <span class="tag">Malvani</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Surmai Fry', 350, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://i.pinimg.com/originals/40/de/29/40de29b17962431a1516c851a76f6982.jpg" alt="Anda Curry">
+          <div class="item-header">
+            <span class="item-name">Anda Curry</span>
+            <span class="item-price">₹180</span>
+          </div>
+          <div class="item-desc">Eggs simmered in spicy Maharashtrian-style curry.</div>
+          <div class="tags">
+            <span class="tag">Egg</span>
+            <span class="tag">Curry</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Anda Curry', 180, this)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img class="item-img" src="https://uploads-ssl.webflow.com/610b00497717ea7f4466e936/64367d474f4173d2d75d0b07_solkadhi-recipe.jpg" alt="Solkadhi">
+          <div class="item-header">
+            <span class="item-name">Solkadhi</span>
+            <span class="item-price">₹50</span>
+          </div>
+          <div class="item-desc">Refreshing drink made with kokum and coconut milk.</div>
+          <div class="tags">
+            <span class="tag">Drink</span>
+            <span class="tag">Cooler</span>
+          </div>
+          <button class="add-btn" onclick="addToCart('Solkadhi', 50, this)">Add to Cart</button>
+        </li>
+
+      </ul>
+    </section>
+</div>
+
+    <section class="section" id="reviews">
+      <h2>Customer Reviews <span>⭐</span></h2>
+      <div class="reviews-list" id="reviews-list">
+        <!-- Reviews will be inserted here by JS -->
+      </div>
+      <form action="submit_review.php" method="POST">
+        <h3 style="color:var(--accent);margin:0 0 6px 0;">Add Your Review</h3>
+       <input type="text" name="name" required>
+        <select name="rating" required>
+          <option value="">Rating</option>
+          <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+          <option value="4">⭐⭐⭐⭐ (4)</option>
+          <option value="3">⭐⭐⭐ (3)</option>
+          <option value="2">⭐⭐ (2)</option>
+          <option value="1">⭐ (1)</option>
+        </select>
+        <textarea name="review" required></textarea>
+        <input type="hidden" name="category" value="non-veg">
+        <button type="submit">Submit Review</button>
+      </form>
+    </section>
+
+    <section class="about-us" id="about">
+      <h2>About Us</h2>
+      <p>
+        Welcome to <strong>Non-Veg Maharashtrian Delights</strong>! We bring you the authentic flavors of Maharashtra's rich non-vegetarian cuisine, from spicy Kolhapuri curries to coastal Malvani seafood. Our chefs use traditional recipes and the freshest ingredients to serve you a memorable feast.
+      </p>
+      <p>
+        Whether you crave fiery chicken, succulent mutton, or fresh seafood, our menu is a celebration of Maharashtra's culinary heritage. Join us for a vibrant dining experience, where every meal is a festival!
+      </p>
+      <p>
+        <strong>Location:</strong>Barshi, Maharashtra<br>
+        <strong>Contact:</strong> +91 9356777314
+      </p>
+    </section>
+  </div>
+
+<script>
+function addToCart(name, price, btn) {
+    // 1. LocalStorage मध्ये डेटा सेव्ह करणे
+    let cart = JSON.parse(localStorage.getItem('swarajya_cart')) || [];
+    cart.push({ name: name, price: price });
+    localStorage.setItem('swarajya_cart', JSON.stringify(cart));
+    
+    // 2. बटनचा मजकूर आणि रंग बदलणे (हिरवा)
+    let originalHTML = btn.innerHTML;
+    btn.innerHTML = "✅ Added";
+    btn.classList.add('success-green'); 
+    
+    // 3. २ सेकंदानंतर बटन पुन्हा आधीसारखे करणे
+    setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.classList.remove('success-green');
+    }, 2000);
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+

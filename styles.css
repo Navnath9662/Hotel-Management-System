@@ -1,0 +1,292 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Khand:wght@400;700&display=swap");
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", "Khand", sans-serif;
+}
+
+/* ///////////..utility classes../////////// */
+
+.container {
+  max-width: 1200px;
+  width: 90%;
+  margin: auto;
+}
+
+/* --- सुधारलेले आकर्षक Menu बटन --- */
+.btn {
+  display: inline-block;
+  padding: 1.2rem 3.5rem; /* मोठे बटन */
+  text-decoration: none;
+  border-radius: 50px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+  color: #fff;
+  background: #16a083;
+}
+
+.btn-primary:hover {
+  background: #117964;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* ............/navbar/............ */
+
+.navbar input[type="checkbox"],
+.navbar .hamburger-lines {
+  display: none;
+}
+
+.navbar {
+  box-shadow: 0px 5px 10px 0px #aaa;
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  color: #000;
+  opacity: 0.95;
+  height: 64px;
+  z-index: 12;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  align-items: center;
+}
+
+.menu-items {
+  order: 2;
+  display: flex;
+}
+
+.menu-items li {
+  list-style: none;
+  margin-left: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.menu-items a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+}
+
+.logo {
+  order: 1;
+  font-family: 'Khand', sans-serif;
+  font-size: 3rem;
+  color: #16a083;
+}
+
+/* ............//// Showcase styling (Background Image) ////......... */
+
+.showcase-area {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.main-title {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Khand', sans-serif;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+.showcase-container p {
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+/* ......// About Us (Side by Side & Animation जसे होते तसे) //...... */
+
+#about {
+  padding: 50px 0;
+  background: #f5f5f7;
+}
+
+.about-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#about h2 {
+  font-size: 3rem;
+  font-family: 'Khand', sans-serif;
+}
+
+#about p {
+  font-size: 1.6rem;
+  color: #555;
+}
+
+.about-img {
+  flex: 1 1 400px;
+  padding: 30px;
+  transform: translateX(150%); /* मूळ ॲनिमेशन */
+  animation: about-img-animation 1s ease-in-out forwards;
+}
+
+@keyframes about-img-animation {
+  100% { transform: translate(0); }
+}
+
+.about-text {
+  flex: 1 1 400px;
+  padding: 30px;
+  margin: auto;
+  transform: translate(-150%); /* मूळ ॲनिमेशन */
+  animation: about-text-animation 1s ease-in-out forwards;
+}
+
+@keyframes about-text-animation {
+  100% { transform: translate(0); }
+}
+
+.about-img img {
+  display: block;
+  height: 400px;
+  max-width: 100%;
+  margin: auto;
+  object-fit: cover;
+  object-position: right;
+}
+
+/* ..........//// Food Category (Hover Animation जसे होते तसे) ///........... */
+
+#food {
+  padding: 5rem 0 10rem 0;
+}
+
+#food h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.food-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.img-container {
+  margin: 0 1rem;
+  position: relative;
+  flex: 1;
+}
+
+.food-container img {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.img-content {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 2;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.img-container::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  z-index: 1;
+  transform: scaleY(0);
+  transform-origin: 100% 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+.img-container:hover::after { opacity: 1; transform: scaleY(1); }
+.img-container:hover .img-content { opacity: 1; top: 40%; }
+
+/* ........ Contact Us (मूळ साध्या लूक मध्ये) ........... */
+
+#contact {
+  padding: 5rem 0;
+  background: rgb(226, 226, 226);
+}
+
+.contact-container {
+  display: flex;
+  background: #fff;
+}
+
+.contact-img { width: 50%; }
+.contact-img img { width: 100%; height: 400px; object-fit: cover; }
+
+.form-container {
+  padding: 2rem;
+  width: 50%;
+  margin: auto;
+}
+
+.form-container h2 { font-size: 2.7rem; margin-bottom: 1rem; }
+
+.form-container input, .form-container textarea {
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  outline: none;
+}
+
+#footer h2 {
+  text-align: center;
+  padding: 2.6rem;
+  background: rgb(65, 65, 65);
+  color: #fff;
+}
+
+/* ......../ media query /.......... */
+
+@media (max-width: 768px) {
+  .food-container, .contact-container, .about-wrapper {
+    flex-direction: column;
+  }
+  .contact-img, .form-container { width: 100%; }
+}

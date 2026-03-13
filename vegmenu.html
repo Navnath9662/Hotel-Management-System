@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>स्वराज्य Maharashtrian Veg Restaurant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --primary: #ff9800;
+            --primary-dark: #e65100;
+            --accent: #ffe0b2;
+            --bg: #fff8e1;
+            --card-bg: #fff3e0;
+            --text: #4e342e;
+            --shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+        }
+        header {
+            background: linear-gradient(90deg, var(--primary-dark) 60%, var(--primary) 100%);
+            color: white;
+            padding: 40px 0 30px 0;
+            text-align: center;
+            position: relative;
+        }
+        header img.logo {
+            width: 90px;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+        }
+        h1 {
+            margin: 10px 0 0 0;
+            font-size: 2.7em;
+            letter-spacing: 2px;
+            font-family: 'Merriweather', serif;
+        }
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+        }
+        nav {
+            margin-top: 18px;
+        }
+        nav a {
+            color: #fffde7;
+            text-decoration: none;
+            margin: 0 18px;
+            font-weight: 500;
+            font-size: 1.1em;
+            transition: color 0.2s;
+        }
+        nav a:hover { color: #ffd54f; }
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            background: var(--accent);
+            padding: 40px 0 30px 0;
+        }
+        .hero-text { max-width: 400px; }
+        .hero-text h2 { color: var(--primary-dark); font-size: 2em; margin-bottom: 10px; }
+        .hero-text p { font-size: 1.1em; margin-bottom: 18px; }
+        .hero img { width: 320px; border-radius: 18px; box-shadow: var(--shadow); }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 40px 30px 30px 30px;
+        }
+        h2 {
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            margin-top: 0;
+            font-size: 2em;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            margin-top: 30px;
+        }
+        .menu-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.18s, box-shadow 0.18s;
+        }
+        .menu-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 8px 24px rgba(255,152,0,0.13);
+        }
+        .menu-card img { width: 100%; height: 170px; object-fit: cover; }
+        .menu-card-content {
+            padding: 18px 16px 14px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .item-name { font-weight: 600; font-size: 1.15em; color: var(--primary-dark); margin-bottom: 6px; }
+        .item-desc { font-size: 0.98em; color: #6d4c41; margin-bottom: 10px; }
+        .item-price { color: var(--primary); font-weight: bold; font-size: 1.1em; margin-top: auto; margin-bottom: 10px; }
+
+        /* BUTTON CSS */
+        .add-btn {
+            background: linear-gradient(45deg, #e65100, #ff9800);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: bold;
+        }
+        .success-green {
+            background: #2ecc71 !important;
+            background-image: none !important;
+            transform: scale(1.05);
+        }
+
+        /* REVIEWS CSS */
+        #reviews { max-width: 900px; margin: 40px auto; text-align: center; padding: 20px; }
+        #reviews form {
+            background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto;
+        }
+        #reviews input, #reviews select, #reviews textarea {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+        }
+        #reviews button {
+            background: #e65100; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 20px;
+        }
+        .gallery-grid img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; transition: 0.2s; }
+        .gallery-grid img:hover { transform: scale(1.06); }
+
+        footer { text-align: center; padding: 22px 0; background: var(--accent); color: #6d4c41; margin-top: 60px; }
+
+        @media (max-width: 700px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero img { width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=facearea&w=256&q=80" alt="Logo" class="logo">
+    <h1>स्वादिष्ट महाराष्ट्रियन शाकाहारी भोजन</h1>
+    <p>Welcome to our Maharashtrian Veg Restaurant</p>
+    <nav>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+        <a href="main.php">Home</a>
+        <a href="Novegmenu.html">Non Veg</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-text">
+        <h2>Authentic Flavours of Maharashtra</h2>
+        <p>Experience the rich and diverse vegetarian cuisine of Maharashtra. From spicy Misal Pav to sweet Puran Poli!</p>
+        <a href="#menu" style="background:var(--primary);color:#fff;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:600;">View Menu</a>
+    </div>
+    <img src="https://images.hindustantimes.com/img/2022/09/14/550x309/Collage_Maker-14-Sep-2022-05.30-PM_1663157326211_1663157437669_1663157437669.jpg" alt="Thali">
+</section>
+
+<div class="container" id="menu">
+    <h2>Our Menu</h2>
+    <div class="menu-grid">
+        <div class="menu-card">
+            <img src="https://smithakalluraya.com/wp-content/uploads/2014/03/thalipeeth-recipe.jpg" alt="Thalipeeth">
+            <div class="menu-card-content">
+                <div class="item-name">Thalipeeth</div>
+                <div class="item-desc">Spicy multigrain flatbread served with butter and curd.</div>
+                <div class="item-price">₹75</div>
+                <button class="add-btn" onclick="addToCart('Thalipeeth', 75, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://images.lifestyleasia.com/wp-content/uploads/sites/7/2022/06/20174313/Untitled-design-2-18.jpg" alt="Misal Pav">
+            <div class="menu-card-content">
+                <div class="item-name">Misal Pav</div>
+                <div class="item-desc">Sprouted lentil curry topped with farsan.</div>
+                <div class="item-price">₹70</div>
+                <button class="add-btn" onclick="addToCart('Misal Pav', 70, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://im.whatshot.in/img/2019/Aug/shutterstock-363307151-cropped-1566973891.jpg" alt="Puran Poli">
+            <div class="menu-card-content">
+                <div class="item-name">Puran Poli</div>
+                <div class="item-desc">Sweet flatbread stuffed with jaggery and dal.</div>
+                <div class="item-price">₹80</div>
+                <button class="add-btn" onclick="addToCart('Puran Poli', 80, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://www.kuchpakrahahai.in/wp-content/uploads/2016/04/Non_sticky_sabudana_khichdi.jpg" alt="Sabudana">
+            <div class="menu-card-content">
+                <div class="item-name">Sabudana Khichdi</div>
+                <div class="item-desc">Sago pearls cooked with peanuts and spices.</div>
+                <div class="item-price">₹60</div>
+                <button class="add-btn" onclick="addToCart('Sabudana Khichdi', 60, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://vegecravings.com/wp-content/uploads/2016/12/batata-vada-recipe-step-by-step-instructions.jpg" alt="Vada">
+            <div class="menu-card-content">
+                <div class="item-name">Batata Vada</div>
+                <div class="item-desc">Spiced mashed potato balls fried in batter.</div>
+                <div class="item-price">₹50</div>
+                <button class="add-btn" onclick="addToCart('Batata Vada', 50, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://i0.wp.com/southindianrecipes.in/wp-content/uploads/2021/08/Kothimbir-Vadi.jpg" alt="Vadi">
+            <div class="menu-card-content">
+                <div class="item-name">Kothimbir Vadi</div>
+                <div class="item-desc">Coriander and chickpea flour fried cakes.</div>
+                <div class="item-price">₹65</div>
+                <button class="add-btn" onclick="addToCart('Kothimbir Vadi', 65, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://i1.wp.com/shikhaskitchen.com/wp-content/uploads/2020/09/IMG-3528-scaled.jpg" alt="Poha">
+            <div class="menu-card-content">
+                <div class="item-name">Poha</div>
+                <div class="item-desc">Flattened rice with onions and peanuts.</div>
+                <div class="item-price">₹40</div>
+                <button class="add-btn" onclick="addToCart('Poha', 40, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://smithakalluraya.com/wp-content/uploads/2015/09/vangi-bhath-bhaat-bath-recipe-brinjal-rice.1024x1024-10.jpg" alt="Vangi Bhath">
+            <div class="menu-card-content">
+                <div class="item-name">Vangi Bhath</div>
+                <div class="item-desc">Aromatic rice dish with brinjal and coconut.</div>
+                <div class="item-price">₹90</div>
+                <button class="add-btn" onclick="addToCart('Vangi Bhath', 90, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://www.vegrecipesofindia.com/wp-content/uploads/2022/12/bharli-vangi-stuffed-brinjal-1.jpg" alt="Bharli Vangi">
+            <div class="menu-card-content">
+                <div class="item-name">Bharli Vangi</div>
+                <div class="item-desc">Stuffed baby brinjals in peanut masala.</div>
+                <div class="item-price">₹100</div>
+                <button class="add-btn" onclick="addToCart('Bharli Vangi', 100, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://luhanhvietnam.com.vn/du-lich/vnt_upload/news/09_2022/amti.jpg" alt="Aamti">
+            <div class="menu-card-content">
+                <div class="item-name">Aamti (Dal)</div>
+                <div class="item-desc">Tangy Maharashtrian dal with toor dal.</div>
+                <div class="item-price">₹60</div>
+                <button class="add-btn" onclick="addToCart('Aamti (Dal)', 60, this)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="menu-card">
+            <img src="https://thumbs.dreamstime.com/b/zunka-bhakar-pithla-pitla-indian-food-zunka-bhakar-pithla-pitla-popular-vegetarian-recipe-india-maharashtra-served-104583446.jpg" alt="Zunka">
+            <div class="menu-card-content">
+                <div class="item-name">Zunka Bhakri</div>
+                <div class="item-desc">Chickpea flour stir fry with jowar bhakri.</div>
+                <div class="item-price">₹85</div>
+                <button class="add-btn" onclick="addToCart('Zunka Bhakri', 85, this)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="container gallery" id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="G1">
+        <img src="https://images.lifestyleasia.com/wp-content/uploads/sites/7/2022/06/20174313/Untitled-design-2-18.jpg" alt="G2">
+        <img src="https://im.whatshot.in/img/2019/Aug/shutterstock-363307151-cropped-1566973891.jpg" alt="G3">
+        <img src="https://shwetainthekitchen.com/wp-content/uploads/2020/08/IMG_9619.jpg" alt="G4">
+    </div>
+</section>
+
+<section class="container" id="contact">
+    <h2>Contact Us</h2>
+    <p>
+        <strong>Address:</strong> Barshi, Maharashtra<br>
+        <strong>Phone:</strong> +91 9847637584<br>
+        <strong>Email:</strong> swarajhotel333333@gmail.com
+    </p>
+</section>
+
+<section id="reviews">
+    <h2>Customer Reviews ⭐</h2>
+    <form action="submit_review.php" method="POST">
+        <input type="text" name="name" placeholder="Name" required>
+        <select name="rating" required>
+            <option value="">Rating</option>
+            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+            <option value="4">⭐⭐⭐⭐ (4)</option>
+            <option value="3">⭐⭐⭐ (3)</option>
+        </select>
+        <textarea name="review" placeholder="Review" required></textarea>
+        <button type="submit">Submit Review</button>
+    </form>
+</section>
+
+<footer>
+    &copy; स्वराज्य Restaurant | Authentic Taste of Maharashtra
+</footer>
+
+<script>
+function addToCart(name, price, btn) {
+    // 1. LocalStorage Update
+    let cart = JSON.parse(localStorage.getItem('swarajya_cart')) || [];
+    cart.push({ name: name, price: price });
+    localStorage.setItem('swarajya_cart', JSON.stringify(cart));
+    
+    // 2. Button Visual Change
+    let originalHTML = btn.innerHTML;
+    btn.innerHTML = "✅ Added";
+    btn.classList.add('success-green'); 
+    
+    // 3. Reset Button after 2 seconds
+    setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.classList.remove('success-green');
+    }, 2000);
+}
+</script>
+
+</body>
+</html>

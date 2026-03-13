@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>तुमची कार्ट | Swarajya Restaurant</title>
+    <script src="https://kit.fontawesome.com/0faddc1af8.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff9800;
+            --secondary: #e65100;
+            --bg: #fdf2e9;
+            --danger: #ff4444;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .cart-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: var(--secondary);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-info h4 { margin: 0; color: #333; }
+        .item-info p { margin: 5px 0 0; color: var(--secondary); font-weight: bold; }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .qty-btn {
+            background: white;
+            border: 1px solid #ddd;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover { background: var(--primary); color: white; }
+
+        .qty-val { font-weight: bold; min-width: 20px; text-align: center; }
+
+        .remove-btn {
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 15px;
+        }
+
+        .total-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3e0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: bold;
+            color: #d84315;
+        }
+
+        .order-form { margin-top: 30px; }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .empty-cart-msg { text-align: center; padding: 40px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="cart-container">
+    <a href="main.php" class="back-btn">
+        <i class="fas fa-arrow-left"></i> मेनूवर परत जा
+    </a>
+
+    <div class="header">
+        <h2><i class="fas fa-shopping-cart"></i> तुमची कार्ट</h2>
+    </div>
+
+    <div id="cartItemsList"></div>
+
+    <div id="emptyMsg" class="empty-cart-msg">
+        <i class="fas fa-box-open" style="font-size: 50px; color: #ccc;"></i>
+        <p>तुमची कार्ट रिकामी आहे!</p>
+    </div>
+
+    <div class="total-section" id="totalDiv">
+        <span>एकूण बिल:</span>
+        <span id="grandTotal">₹0</span>
+    </div>
+
+    <div class="order-form" id="orderFormArea">
+        <form id="finalOrderForm">
+            <input type="text" name="user_name" placeholder="तुमचे पूर्ण नाव" required>
+            <input type="tel" name="user_phone" placeholder="मोबाईल नंबर" pattern="[0-9]{10}" required>
+            <textarea name="user_address" rows="3" placeholder="डिलिव्हरीचा पूर्ण पत्ता" required></textarea>
+            <button type="submit" class="confirm-btn" id="submitBtn">ऑर्डर कन्फर्म करा</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // १. LocalStorage मधून डेटा लोड करणे
+    let rawCart = JSON.parse(localStorage.getItem('swarajya_cart')) || [];
+    
+    // पदार्थांची संख्या मोजण्यासाठी डेटा स्ट्रक्चर तयार करणे
+    let cartMap = {};
+    rawCart.forEach(item => {
+        if (cartMap[item.name]) {
+            cartMap[item.name].qty += 1;
+        } else {
+            cartMap[item.name] = { name: item.name, price: parseInt(item.price), qty: 1 };
+        }
+    });
+
+    function displayCart() {
+        const listDiv = document.getElementById('cartItemsList');
+        const emptyMsg = document.getElementById('emptyMsg');
+        const totalDiv = document.getElementById('totalDiv');
+        const formArea = document.getElementById('orderFormArea');
+        
+        listDiv.innerHTML = '';
+        let total = 0;
+        let keys = Object.keys(cartMap);
+
+        if (keys.length === 0) {
+            emptyMsg.style.display = 'block';
+            totalDiv.style.display = 'none';
+            formArea.style.display = 'none';
+            return;
+        }
+
+        keys.forEach(key => {
+            let item = cartMap[key];
+            let itemTotal = item.price * item.qty;
+            total += itemTotal;
+
+            listDiv.innerHTML += `
+                <div class="cart-item">
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <p>₹${item.price} x ${item.qty} = ₹${itemTotal}</p>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="updateQty('${item.name}', -1)">-</button>
+                            <span class="qty-val">${item.qty}</span>
+                            <button class="qty-btn" onclick="updateQty('${item.name}', 1)">+</button>
+                        </div>
+                        <i class="fas fa-trash-alt remove-btn" onclick="removeItem('${item.name}')"></i>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('grandTotal').innerText = '₹' + total;
+    }
+
+    // २. Quantity Update करणे
+    function updateQty(name, change) {
+        if (cartMap[name].qty + change > 0) {
+            cartMap[name].qty += change;
+            saveAndRefresh();
+        }
+    }
+
+    // ३. Item पूर्णपणे काढणे
+    function removeItem(name) {
+        if(confirm("हा पदार्थ काढून टाकायचा?")) {
+            delete cartMap[name];
+            saveAndRefresh();
+        }
+    }
+
+    // ४. बदल सेव्ह करणे
+    function saveAndRefresh() {
+        // पुन्हा साधं array बनवून सेव्ह करणे (जुने format टिकवण्यासाठी)
+        let newRawCart = [];
+        Object.keys(cartMap).forEach(key => {
+            for(let i=0; i < cartMap[key].qty; i++) {
+                newRawCart.push({ name: cartMap[key].name, price: cartMap[key].price });
+            }
+        });
+        localStorage.setItem('swarajya_cart', JSON.stringify(newRawCart));
+        displayCart();
+    }
+
+    // ५. ऑर्डर सबमिट करणे
+    document.getElementById('finalOrderForm').onsubmit = function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerText = "प्रक्रिया सुरू आहे...";
+
+        // बिलाची पूर्ण माहिती एका स्ट्रिंगमध्ये
+        let orderDetails = Object.keys(cartMap).map(k => `${cartMap[k].name} (${cartMap[k].qty})`).join(", ");
+        let finalBill = document.getElementById('grandTotal').innerText;
+
+        const formData = new FormData(this);
+        formData.append('item_name', orderDetails);
+        formData.append('total_price', finalBill);
+        formData.append('category', 'Online Order');
+
+        fetch('./order.php', { method: 'POST', body: formData })
+        .then(res => res.text())
+        .then(data => {
+            if(data.trim() === "Success") {
+                alert("✅ ऑर्डर यशस्वी झाली!");
+                localStorage.removeItem('swarajya_cart');
+                window.location.href = "main.php";
+            } else {
+                alert("Error: " + data);
+                btn.disabled = false;
+                btn.innerText = "ऑर्डर कन्फर्म करा";
+            }
+        });
+    };
+
+    displayCart();
+</script>
+
+</body>
+</html>

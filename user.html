@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Order | Swarajya Restaurant</title>
+    <script src="https://kit.fontawesome.com/0faddc1af8.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary: #ff9800;
+            --secondary: #e65100;
+            --dark: #2d3436;
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fdf2e9 0%, #ffe0b2 100%);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .order-container {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .restaurant-logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .restaurant-logo span { color: var(--primary); }
+
+        h3 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .item-card {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #displayItem {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: var(--primary);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #fcfcfc;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255,152,0,0.1);
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(230,81,0,0.3);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(230,81,0,0.4);
+            filter: brightness(1.1);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--secondary);
+        }
+
+        /* Success Icon Animation */
+        .check-icon { font-size: 40px; color: #4CAF50; margin-bottom: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="order-container">
+    <div class="restaurant-logo">🚩 स्वराज्य <span>Restaurant</span></div>
+    <h3>डिलिव्हरीची माहिती भरा</h3>
+    
+    <div class="item-card">
+        <i class="fas fa-utensils"></i>
+        <div id="displayItem">लोड होत आहे...</div>
+    </div>
+
+    <form id="orderForm">
+        <input type="hidden" id="itemName" name="item_name">
+        <input type="hidden" id="category" name="category">
+        
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="user_name" placeholder="तुमचे पूर्ण नाव" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-phone-alt"></i>
+            <input type="tel" name="user_phone" placeholder="मोबाईल नंबर (१० अंकी)" pattern="[0-9]{10}" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fas fa-map-marker-alt" style="top: 20px;"></i>
+            <textarea name="user_address" rows="3" placeholder="डिलिव्हरीचा पूर्ण पत्ता (घर क्र, एरिया...)" required style="padding-top: 15px;"></textarea>
+        </div>
+        
+        <button type="submit" id="submitBtn">
+            <i class="fas fa-check-circle me-2"></i> ऑर्डर कन्फर्म करा
+        </button>
+    </form>
+
+    <a href="main.php" class="back-link"><i class="fas fa-arrow-left"></i> मेनूवर परत जा</a>
+</div>
+
+<script>
+    // URL मधून डेटा मिळवणे
+    const urlParams = new URLSearchParams(window.location.search);
+    const item = urlParams.get('item');
+    const cat = urlParams.get('category');
+
+    // फॉर्ममध्ये व्हॅल्यू सेट करणे
+    document.getElementById('itemName').value = item;
+    document.getElementById('category').value = cat;
+    
+    // स्क्रीनवर दिसण्यासाठी
+    document.getElementById('displayItem').textContent = item ? item : "निवडलेला पदार्थ";
+
+    document.getElementById('orderForm').onsubmit = function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> कृपया थांबा...';
+
+        const formData = new FormData(this);
+
+        fetch('./order.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())
+        .then(data => {
+            if(data.trim() === "Success") {
+                // सुंदर मेसेज दाखवा
+                document.querySelector('.order-container').innerHTML = `
+                    <div style="padding: 20px;">
+                        <i class="fas fa-check-circle" style="font-size: 60px; color: #4CAF50;"></i>
+                        <h2 style="color: #2d3436; margin-top: 20px;">ऑर्डर यशस्वी!</h2>
+                        <p style="color: #636e72;">तुमची ऑर्डर घेतली आहे. लवकरच गरम जेवण तुमच्या घरी पोहोचेल!</p>
+                        <button onclick="window.location.href='main.php'" style="margin-top: 20px;">मुख्य पृष्ठावर जा</button>
+                    </div>
+                `;
+            } else {
+                alert("क्षमस्व! तांत्रिक अडचण: " + data);
+                btn.disabled = false;
+                btn.innerHTML = 'पुन्हा प्रयत्न करा';
+            }
+        })
+        .catch(err => {
+            alert("नेटवर्क एरर!");
+            btn.disabled = false;
+            btn.innerHTML = 'ऑर्डर कन्फर्म करा';
+        });
+    };
+</script>
+
+</body>
+</html>
